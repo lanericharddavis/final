@@ -1,7 +1,7 @@
-using final.Models;
-using final.Repositories;
+using final.server.Models;
+using final.server.Repositories;
 
-namespace final.Services
+namespace final.server.Services
 {
   public class AccountsService
   {

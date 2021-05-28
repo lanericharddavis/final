@@ -1,6 +1,6 @@
 using System;
 
-namespace final.Models
+namespace final.server.Models
 {
   public class Account
   {

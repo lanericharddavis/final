@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
-using final.Models;
-using final.Services;
+using final.server.Models;
+using final.server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace final.Controllers
+namespace final.server.Controllers
 {
   [ApiController]
   [Route("[controller]")]

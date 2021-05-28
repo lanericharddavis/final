@@ -1,4 +1,4 @@
-namespace final.Models
+namespace final.server.Models
 {
   public class Keep
   {

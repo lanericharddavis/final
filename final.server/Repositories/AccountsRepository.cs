@@ -1,8 +1,8 @@
 using System.Data;
 using Dapper;
-using final.Models;
+using final.server.Models;
 
-namespace final.Repositories
+namespace final.server.Repositories
 {
   public class AccountsRepository
   {

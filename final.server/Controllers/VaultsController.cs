@@ -1,4 +1,4 @@
-namespace final.Controllers
+namespace final.server.Controllers
 {
   public class VaultsController
   {
