@@ -15,6 +15,21 @@ namespace final.server.Repositories
     {
       _db = db;
     }
+    internal List<Keep> GetAll()
+    {
+      string sql = @"
+      SELECT
+            k.*,
+            a.*
+        FROM keeps k
+        JOIN accounts a ON a.id = k.creatorId
+       ";
+      return _db.Query<Keep, Profile, Keep>(sql, (k, p) =>
+      {
+        k.Creator = p;
+        return k;
+      }, splitOn: "id").ToList();
+    }
     internal List<Keep> GetKeepsByProfileId(int profileId)
     {
       string sql = @"
@@ -31,5 +46,6 @@ namespace final.server.Repositories
         return k;
       }, new { profileId }).ToList();
     }
+
   }
 }
