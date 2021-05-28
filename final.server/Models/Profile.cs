@@ -1,4 +1,4 @@
-namespace final.server.Models
+namespace final.Models
 {
   public class Profile
   {
