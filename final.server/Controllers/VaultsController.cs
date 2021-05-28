@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Mvc;
+
 namespace final.server.Controllers
 {
-  public class VaultsController
+  public class VaultsController : ControllerBase
   {
 
   }

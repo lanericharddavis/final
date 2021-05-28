@@ -10,13 +10,13 @@ namespace final.server.Controllers
 {
   [ApiController]
   [Route("[controller]")]
-  public class AccountsController : ControllerBase
+  public class AccountController : ControllerBase
   {
-    private readonly AccountsService _accountsService;
+    private readonly AccountService _accountService;
 
-    public AccountsController(AccountsService accountsService)
+    public AccountController(AccountService accountService)
     {
-      _accountsService = accountsService;
+      _accountService = accountService;
     }
 
     [HttpGet]
@@ -26,7 +26,7 @@ namespace final.server.Controllers
       try
       {
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-        return Ok(_accountsService.GetOrCreateProfile(userInfo));
+        return Ok(_accountService.GetOrCreateProfile(userInfo));
       }
       catch (Exception e)
       {

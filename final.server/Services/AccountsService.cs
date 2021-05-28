@@ -1,12 +1,13 @@
+using System;
 using final.server.Models;
 using final.server.Repositories;
 
 namespace final.server.Services
 {
-  public class AccountsService
+  public class AccountService
   {
-    private readonly AccountsRepository _repo;
-    public AccountsService(AccountsRepository repo)
+    private readonly AccountRepository _repo;
+    public AccountService(AccountRepository repo)
     {
       _repo = repo;
     }
@@ -27,6 +28,11 @@ namespace final.server.Services
         return _repo.Create(userInfo);
       }
       return profile;
+    }
+
+    internal Profile GetProfileById(string id)
+    {
+      return _repo.GetById(id);
     }
 
     internal Account Edit(Account editData, string userEmail)

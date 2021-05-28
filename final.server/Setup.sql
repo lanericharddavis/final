@@ -40,41 +40,82 @@ CREATE TABLE IF NOT EXISTS vault_keeps(
   FOREIGN KEY (vaultId) REFERENCES vaults(id) ON DELETE CASCADE,
   FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
-/* INSERT INTO
-  comments(body, groupId, creatorId)
+INSERT INTO
+  vaults(name, description, isPrivate, creatorId)
 VALUES
   (
-    "This is the groups first comment!",
-    3,
+    "Puppies",
+    "Look at all the cute puppies!",
+    false,
     "cd5f28ba-d192-4c30-9434-b39c95fdfdfa"
-  ); */
-/* INSERT INTO
-  groups(name, description, img, creatorId)
+  );
+INSERT INTO
+  keeps(
+    name,
+    description,
+    img,
+    views,
+    shares,
+    keeps,
+    creatorId
+  )
 VALUES
   (
-    "CodeWorks Alumni",
-    "Let's talk code!!!",
+    "Lovely Labs",
+    "Chocolate is good",
     "//placehold.it/500x500",
+    0,
+    0,
+    0,
     "cd5f28ba-d192-4c30-9434-b39c95fdfdfa"
-  ); */
-/* SELECT
-  g.*,
-  g.id AS groupId,
-  a.name as creatorName,
-  a.picture as creatorPic
-FROM
-  groups g
-  JOIN accounts a ON a.id = g.creatorId
-WHERE
-  g.id = 3; */
-/* SELECT
-  c.*,
-  g.*,
-  a.name,
-  a.picture
-FROM
-  comments c
-  JOIN accounts a ON c.creatorId = a.id;
-  JOIN groups g ON c.groupId = g.id;
-WHERE
-  groupId = 3; */
+  );
+INSERT INTO
+  vaults(name, description, isPrivate, creatorId)
+VALUES
+  (
+    "Kittens!",
+    "Look at all the cute kittens!",
+    false,
+    "81e3908a-3997-4f25-bb36-b8d38060cde4"
+  );
+INSERT INTO
+  keeps(
+    name,
+    description,
+    img,
+    views,
+    shares,
+    keeps,
+    creatorId
+  )
+VALUES
+  (
+    "Fluffy",
+    "The fluffier, the better!",
+    "//placehold.it/500x500",
+    0,
+    0,
+    0,
+    "81e3908a-3997-4f25-bb36-b8d38060cde4"
+  );
+  /* SELECT
+    g.*,
+    g.id AS groupId,
+    a.name as creatorName,
+    a.picture as creatorPic
+  FROM
+    groups g
+    JOIN accounts a ON a.id = g.creatorId
+  WHERE
+    g.id = 3; */
+  /* SELECT
+    c.*,
+    g.*,
+    a.name,
+    a.picture
+  FROM
+    comments c
+    JOIN accounts a ON c.creatorId = a.id;
+    JOIN groups g ON c.groupId = g.id;
+  WHERE
+    groupId = 3; */

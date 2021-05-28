@@ -2,11 +2,11 @@ using System.Data;
 
 namespace final.server.Repositories
 {
-  public class ProfilesRepository
+  public class VaultKeepsRepository
   {
     private readonly IDbConnection _db;
 
-    public ProfilesRepository(IDbConnection db)
+    public VaultKeepsRepository(IDbConnection db)
     {
       _db = db;
     }

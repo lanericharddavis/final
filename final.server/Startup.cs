@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using final.server.Repositories;
+using final.server.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,8 +42,23 @@ namespace final.server
       });
 
       services.AddScoped<IDbConnection>(x => CreateDbConnection());
-    }
 
+      // REPOS
+      services.AddScoped<AccountRepository>();
+      services.AddTransient<ProfilesRepository>();
+      services.AddTransient<KeepsRepository>();
+      services.AddTransient<VaultsRepository>();
+      services.AddTransient<VaultKeepsRepository>();
+
+
+      // BUSINESS LOGIC
+      services.AddScoped<AccountService>();
+      services.AddTransient<ProfilesService>();
+      services.AddTransient<KeepsService>();
+      services.AddTransient<VaultsService>();
+      services.AddTransient<VaultKeepsService>();
+
+    }
     private void ConfigureCors(IServiceCollection services)
     {
       services.AddCors(options =>

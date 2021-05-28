@@ -1,14 +1,15 @@
+using System;
 using System.Data;
 using Dapper;
 using final.server.Models;
 
 namespace final.server.Repositories
 {
-  public class AccountsRepository
+  public class AccountRepository
   {
     private readonly IDbConnection _db;
 
-    public AccountsRepository(IDbConnection db)
+    public AccountRepository(IDbConnection db)
     {
       _db = db;
     }
