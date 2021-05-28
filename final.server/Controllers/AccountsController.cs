@@ -1,20 +1,20 @@
 using System;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
-using final.server.Models;
-using final.server.Services;
+using final.Models;
+using final.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace final.server.Controllers
+namespace final.Controllers
 {
   [ApiController]
   [Route("[controller]")]
-  public class AccountController : ControllerBase
+  public class AccountsController : ControllerBase
   {
     private readonly AccountsService _accountsService;
 
-    public AccountController(AccountsService accountsService)
+    public AccountsController(AccountsService accountsService)
     {
       _accountsService = accountsService;
     }

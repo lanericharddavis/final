@@ -1,4 +1,6 @@
-namespace final.server.Models
+using System;
+
+namespace final.Models
 {
   public class Account
   {
@@ -6,5 +8,7 @@ namespace final.server.Models
     public string Name { get; set; }
     public string Email { get; set; }
     public string Picture { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
   }
 }
