@@ -1,9 +1,13 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo">
-    <h1 class="my-5 bg-dark text-light p-3 rounded d-flex align-items-center">
-      <span class="mx-2 text-white">Vue 3 Starter</span>
-    </h1>
+  <div class="container-fluid home">
+    <div class="back">
+      <img src="../assets/img/RevillaLooks.png" class=" masonry-with-flex shadow" alt="filler img">
+      <div class="keep-title text-light text-right">
+        <p>
+          keep title
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -22,4 +26,16 @@ export default {
     width: 200px;
   }
 }
+
+.gradient {
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.281) , transparent);
+  background-size: cover;
+  z-index: 1;
+}
+
+.keep-title {
+  position: absolute;
+  bottom: 50px;
+}
+
 </style>
