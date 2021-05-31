@@ -4,6 +4,7 @@
   </header>
   <main>
     <router-view />
+    <keep-modal />
   </main>
   <footer>
     <div class="bg-dark text-light text-center p-4">
@@ -15,7 +16,10 @@
 <script>
 import { computed } from 'vue'
 import { AppState } from './AppState'
+import KeepModal from './components/KeepModal'
+
 export default {
+  components: { KeepModal },
   name: 'App',
   setup() {
     return {

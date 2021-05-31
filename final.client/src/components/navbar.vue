@@ -6,6 +6,7 @@
           alt="logo"
           src="../assets/img/KPr-logo.png"
           height="45"
+          title="home page"
         />
       </div>
     </router-link>
@@ -22,12 +23,17 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
+        <li class="nav-item" title="home page">
           <router-link :to="{ name: 'Home' }" class="nav-link">
             Home
           </router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" title="profile page">
+          <router-link :to="{ name: 'Profile' }" class="nav-link">
+            Profile
+          </router-link>
+        </li>
+        <li class="nav-item" title="about page">
           <router-link :to="{ name: 'About' }" class="nav-link">
             About
           </router-link>
@@ -38,13 +44,15 @@
           class="btn btn-outline-primary text-uppercase"
           @click="login"
           v-if="!user.isAuthenticated"
+          title="login"
         >
           Login
         </button>
 
         <div class="dropdown" v-else>
           <div
-            class="dropdown-toggle"
+            class="dropdown-toggle hoverable"
+            title="dropdown menu"
             @click="state.dropOpen = !state.dropOpen"
           >
             <img
@@ -61,13 +69,14 @@
             @click="state.dropOpen = false"
           >
             <router-link :to="{ name: 'Account' }">
-              <div class="list-group-item list-group-item-action hoverable">
+              <div class="list-group-item list-group-item-action hoverable" title="Account page">
                 Account
               </div>
             </router-link>
             <div
               class="list-group-item list-group-item-action hoverable"
               @click="logout"
+              title="logout"
             >
               logout
             </div>

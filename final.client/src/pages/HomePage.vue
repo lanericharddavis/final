@@ -1,58 +1,46 @@
 <template>
   <div class="container-fluid home">
-    <div class="col-md-4 card-column masonry">
-      <div class="card item shadow rounded-corners my-3">
+    <div class="card-column masonry">
+      <!-- This Section is repeated Keeps -->
+      <!-- <div class="card item shadow rounded-corners mb-4 mt-1 hoverable">
         <img src="../assets/img/boat.png" class="rounded-corners" alt="">
         <div class="card-img-overlay d-flex align-items-end justify-content-between">
           <h4 class="card-title text-light">
             Keep Title
           </h4>
-          <img src="//placehold.it/50x50" class="circle-pic" alt="keeps owner profile picture">
+          <router-link :to="{name: 'Profile'}">
+            <img src="//placehold.it/50x50" class="circle-pic jump-up" alt="keeps owner profile picture">
+          </router-link>
         </div>
-      </div>
-      <div class="card item shadow rounded-corners my-3">
-        <img src="../assets/img/RevillaLooks.png" class="rounded-corners" alt="">
-        <div class="card-img-overlay d-flex align-items-end justify-content-between">
-          <h4 class="card-title text-light">
-            Keep Title
-          </h4>
-          <img src="//placehold.it/50x50" class="circle-pic" alt="keeps owner profile picture">
-        </div>
-      </div>
-      <div class="card item shadow rounded-corners my-3">
-        <img src="../assets/img/fall-mtn.png" class="rounded-corners" alt="">
-        <div class="card-img-overlay d-flex align-items-end justify-content-between">
-          <h4 class="card-title text-light">
-            Keep Title
-          </h4>
-          <img src="//placehold.it/50x50" class="circle-pic" alt="keeps owner profile picture">
-        </div>
-      </div>
-      <div class="card item shadow rounded-corners my-3">
-        <img src="../assets/img/fishingpole.png" class="rounded-corners" alt="">
-        <div class="card-img-overlay d-flex align-items-end justify-content-between">
-          <h4 class="card-title text-light">
-            Keep Title
-          </h4>
-          <img src="//placehold.it/50x50" class="circle-pic" alt="keeps owner profile picture">
-        </div>
-      </div>
-      <div class="card item shadow rounded-corners my-3">
-        <img src="../assets/img/fleet.png" class="rounded-corners" alt="">
-        <div class="card-img-overlay d-flex align-items-end justify-content-between">
-          <h4 class="card-title text-light">
-            Keep Title
-          </h4>
-          <img src="//placehold.it/50x50" class="circle-pic" alt="keeps owner profile picture">
-        </div>
-      </div>
+      </div> -->
+      <!-- -^^- Single Keep Example -^^- -->
+      <KeepComponent v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" />
     </div>
+    {{ state.keeps }}
+    <keep-modal v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" />
   </div>
 </template>
 
 <script>
+import { computed, onMounted, reactive } from 'vue'
+import { AppState } from '../AppState'
+import { keepsService } from '../services/KeepsService'
+import KeepModal from '../components/KeepModal.vue'
+
 export default {
-  name: 'Home'
+  components: { KeepModal },
+  name: 'Home',
+  setup() {
+    const state = reactive({
+      keeps: computed(() => AppState.keeps)
+    })
+    onMounted(async() => {
+      await keepsService.getAll()
+    })
+    return {
+      state
+    }
+  }
 }
 </script>
 
@@ -115,23 +103,6 @@ export default {
     }
 }
 
-// .card-columns {
-//   @include media-breakpoint-only(lg) {
-//     column-count: 4;
-//   }
-//   @include media-breakpoint-only(xl) {
-//     column-count: 5;
-//   }
-// }
-
-// .home{
-//   text-align: center;
-//   user-select: none;
-//   > img{
-//     height: 200px;
-//     width: 200px;
-//   }
-// }
 .rounded-corners {
   border-radius: 10px;
 }
@@ -139,20 +110,6 @@ export default {
   background-image: linear-gradient(to top, rgba(0, 0, 0, 0.281) , transparent);
   background-size: cover;
   z-index: 1;
-}
-
-.keep-title {
-  position: absolute;
-  bottom: 1px;
-  padding-left: 10px;
-}
-
-.raise-row {
-  margin-bottom: 100px;
-}
-
-.keep-img {
-  width: 300px;
 }
 
 .circle-pic{

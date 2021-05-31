@@ -21,3 +21,16 @@ main {
   display: flex;
   align-items: stretch;
 }
+
+.hoverable {
+  cursor: pointer;
+}
+
+.jump-up:hover{
+  position: relative;
+  bottom: 3px;
+
+.circle-pic{
+  border-radius: 50%;
+}
+}
