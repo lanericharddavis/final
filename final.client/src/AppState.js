@@ -5,8 +5,10 @@ export const AppState = reactive({
   user: {},
   account: {},
   // vvv not attached to Auth
+  loading: true,
   profile: {},
   vaults: [],
   keeps: [],
-  activeKeep: null
+  activeKeep: null,
+  activeProfile: null
 })

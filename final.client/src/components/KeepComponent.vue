@@ -1,8 +1,9 @@
 <template>
   <div class="keep-component">
     <div class="card item shadow rounded-corners mb-4 mt-1 hoverable"
+         type="button"
          data-toggle="modal"
-         data-target="#keepModal"
+         data-target="#keepModal + keepProp.id"
     >
       <img v-if="
              keepProp.img"
@@ -15,9 +16,10 @@
           {{ keepProp.name }}
         </h4>
         <router-link :to="{name: 'Profile', params:{id: keepProp.creatorId}}">
-          <img src="//placehold.it/50x50" class="circle-pic jump-up" alt="keeps owner profile picture">
+          <img :src="keepProp.creator.picture" class="circle-pic jump-up" alt="keeps owner profile picture">
         </router-link>
       </div>
+      <!-- <keep-modal v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" /> -->
     </div>
   </div>
 </template>
@@ -25,8 +27,10 @@
 <script>
 import { reactive, computed } from 'vue'
 import { AppState } from '../AppState'
+// import KeepModal from '../components/KeepModal.vue'
 
 export default {
+  // components: { KeepModal },
   name: 'KeepComponent',
   props: {
     keepProp: {
@@ -37,14 +41,13 @@ export default {
   setup() {
     const state = reactive({
       user: computed(() => AppState.user),
-      account: computed(() => AppState.account)
-      // keeps: computed(() => AppState.keeps)
+      account: computed(() => AppState.account),
+      keeps: computed(() => AppState.keeps)
     })
     return {
       state
     }
-  },
-  components: {}
+  }
 }
 </script>
 
@@ -61,6 +64,7 @@ export default {
 
 .circle-pic{
   border-radius: 50%;
+  max-width: 50px;
 }
 
 </style>

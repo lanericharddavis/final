@@ -1,5 +1,6 @@
 <template>
-  <div class="modal"
+  <div v-if="keepProp"
+       class="modal"
        :id="'keepModal' + keepProp.id"
        tabindex="-1"
        role="dialog"
@@ -78,9 +79,9 @@
 </template>
 
 <script>
-import { reactive, computed, onMounted } from 'vue'
+import { reactive, computed } from 'vue'
 import { AppState } from '../AppState'
-import { keepsService } from '../services/KeepsService'
+// import { keepsService } from '../services/KeepsService'
 
 export default {
   name: 'KeepModal',
@@ -94,9 +95,9 @@ export default {
     const state = reactive({
       keeps: computed(() => AppState.activeKeep)
     })
-    onMounted(async() => {
-      await keepsService.getById(props.keepProp.id)
-    })
+    // onMounted(async() => {
+    //   await keepsService.getById(props.keepProp.id)
+    // })
     return {
       state
     }

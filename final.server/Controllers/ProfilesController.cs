@@ -33,7 +33,7 @@ namespace final.server.Controllers
     }
 
     [HttpGet("{id}/keeps")]
-    public ActionResult<List<Keep>> GetKeepsByProfileId(int id)
+    public ActionResult<List<Keep>> GetKeepsByProfileId(string id)
     {
       try
       {
@@ -47,7 +47,7 @@ namespace final.server.Controllers
     }
 
     [HttpGet("{id}/vaults")]
-    public ActionResult<List<Vault>> GetVaultsByProfileId(int id)
+    public ActionResult<List<Vault>> GetVaultsByProfileId(string id)
     {
       try
       {

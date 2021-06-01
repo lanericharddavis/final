@@ -1,23 +1,9 @@
 <template>
   <div class="container-fluid home">
     <div class="card-column masonry">
-      <!-- This Section is repeated Keeps -->
-      <!-- <div class="card item shadow rounded-corners mb-4 mt-1 hoverable">
-        <img src="../assets/img/boat.png" class="rounded-corners" alt="">
-        <div class="card-img-overlay d-flex align-items-end justify-content-between">
-          <h4 class="card-title text-light">
-            Keep Title
-          </h4>
-          <router-link :to="{name: 'Profile'}">
-            <img src="//placehold.it/50x50" class="circle-pic jump-up" alt="keeps owner profile picture">
-          </router-link>
-        </div>
-      </div> -->
-      <!-- -^^- Single Keep Example -^^- -->
       <KeepComponent v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" />
     </div>
-    {{ state.keeps }}
-    <keep-modal />
+    <keep-modal v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" />
   </div>
 </template>
 

@@ -3,7 +3,7 @@
     <h1>You Have Reached the Profile Page</h1>
     <div class="row">
       <div class="col-md-5">
-        <img src="//placehold.it/400x400" alt="profile picture">
+        <img :src="state.activeProfile.picture" alt="profile picture">
       </div>
       <div class="col-md-7">
         <div class="row">
@@ -46,7 +46,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <img src="//placehold.it/100x100" alt="">
+            <img :src="state.activeProfile.picture" alt="">
           </div>
         </div>
       </div>
@@ -55,10 +55,36 @@
 </template>
 
 <script>
+import { computed, onMounted, reactive, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { profilesService } from '../services/ProfilesService'
+import { AppState } from '../AppState'
+
 export default {
   name: 'ProfilePage',
   setup() {
-    return {}
+    const route = useRoute()
+    const state = reactive({
+      activeProfile: computed(() => AppState.activeProfile)
+    })
+    watch(() => state.loading, () => {
+      profilesService.getProfile(route.params.id)
+    })
+    onMounted(async() => {
+      try {
+        if (!state.loading) {
+          await profilesService.getProfile(route.params.id)
+        }
+        await profilesService.getVaultsByProfileId(route.params.id)
+        await profilesService.getKeepsByProfileId(route.params.id)
+      } catch (error) {
+        console.error(error)
+      }
+    })
+    return {
+      state,
+      route
+    }
   },
   components: {}
 }

@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using final.server.Models;
 using final.server.Repositories;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace final.server.Services
 {
@@ -21,12 +24,17 @@ namespace final.server.Services
       return _vaultsRepo.GetAll();
     }
 
-    internal Vault GetById(int id)
+    internal Vault GetById(int id, string userId)
     {
+
       Vault vault = _vaultsRepo.GetById(id);
       if (vault == null)
       {
         throw new Exception("Invalid Id");
+      }
+      if (vault.IsPrivate == true && userId != vault.CreatorId)
+      {
+        throw new Exception("Access Denied: Vault is set as Private");
       }
       return vault;
     }
@@ -38,7 +46,7 @@ namespace final.server.Services
 
     internal Vault Update(Vault update, Account userInfo)
     {
-      Vault original = GetById(update.Id);
+      Vault original = GetById(update.Id, userInfo.Id);
       if (original.CreatorId == userInfo.Id)
       {
         original.Name = update.Name != null ? update.Name : original.Name;
@@ -62,7 +70,7 @@ namespace final.server.Services
 
     internal void Remove(int id, string creatorId)
     {
-      Vault vault = GetById(id);
+      Vault vault = GetById(id, creatorId);
       if (vault.CreatorId != creatorId)
       {
         throw new Exception("Delete Not Permitted: You do not own this Vault");
