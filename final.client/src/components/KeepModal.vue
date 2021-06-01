@@ -1,6 +1,6 @@
 <template>
   <div class="modal"
-       id="keepModal"
+       :id="'keepModal' + keepProp.id"
        tabindex="-1"
        role="dialog"
        aria-labelledby="Keep Modal"

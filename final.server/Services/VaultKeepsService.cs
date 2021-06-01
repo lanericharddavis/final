@@ -34,14 +34,14 @@ namespace final.server.Services
       return _vksRepo.Create(newVaultKeep);
     }
 
-    internal void Delete(int id, string creatorId)
+    internal void Remove(int id, string creatorId)
     {
       VaultKeep comment = GetById(id);
       if (comment.CreatorId != creatorId)
       {
         throw new Exception("You cannot delete another users VaultKeep");
       }
-      if (!_vksRepo.Delete(id))
+      if (!_vksRepo.Remove(id))
       {
         throw new Exception("Error: Review VaultKeepsService Delete");
       }

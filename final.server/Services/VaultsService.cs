@@ -8,10 +8,12 @@ namespace final.server.Services
   public class VaultsService
   {
     private readonly VaultsRepository _vaultsRepo;
+    private readonly VaultKeepsRepository _vksRepo;
 
-    public VaultsService(VaultsRepository vaultsRepo)
+    public VaultsService(VaultsRepository vaultsRepo, VaultKeepsRepository vksRepo)
     {
       _vaultsRepo = vaultsRepo;
+      _vksRepo = vksRepo;
     }
 
     internal List<Vault> GetAll()
@@ -51,6 +53,11 @@ namespace final.server.Services
         throw new Exception("Error: Review VaultsService Update");
       }
       throw new Exception("Edit Not Permitted: You do not own this Vault.");
+    }
+
+    internal List<VaultKeepViewModel> GetKeepsByVaultId(int vaultId)
+    {
+      return _vksRepo.GetKeepsByVaultId(vaultId);
     }
 
     internal void Remove(int id, string creatorId)

@@ -49,7 +49,7 @@ namespace final.server.Controllers
 
     [HttpPost]
     [Authorize]
-    public async Task<ActionResult<VaultKeep>> CreateAsync([FromBody] VaultKeep vaultKeep)
+    public async Task<ActionResult<VaultKeep>> Create([FromBody] VaultKeep vaultKeep)
     {
       try
       {
@@ -67,12 +67,12 @@ namespace final.server.Controllers
 
     [HttpDelete("{id}")]
     [Authorize]
-    public async Task<ActionResult<VaultKeep>> Delete(int id)
+    public async Task<ActionResult<VaultKeep>> Remove(int id)
     {
       try
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        _vksService.Delete(id, userInfo.Id);
+        _vksService.Remove(id, userInfo.Id);
         return Ok("VaultKeep Deleted");
       }
       catch (Exception e)

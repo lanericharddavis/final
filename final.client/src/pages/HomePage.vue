@@ -17,7 +17,7 @@
       <KeepComponent v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" />
     </div>
     {{ state.keeps }}
-    <keep-modal v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" />
+    <keep-modal />
   </div>
 </template>
 

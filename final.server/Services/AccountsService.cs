@@ -32,7 +32,7 @@ namespace final.server.Services
 
     internal Profile GetProfileById(string id)
     {
-      return _repo.GetById(id);
+      return _repo.GetProfileById(id);
     }
 
     internal Account Edit(Account editData, string userEmail)

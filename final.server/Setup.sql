@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS keeps(
   keeps int NOT NULL COMMENT 'Keep Keeps',
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
-CREATE TABLE IF NOT EXISTS vault_keeps(
+CREATE TABLE IF NOT EXISTS vaultkeeps(
   id INT AUTO_INCREMENT NOT NULL primary key COMMENT 'primary key',
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
@@ -40,6 +40,26 @@ CREATE TABLE IF NOT EXISTS vault_keeps(
   FOREIGN KEY (vaultId) REFERENCES vaults(id) ON DELETE CASCADE,
   FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
+INSERT INTO
+  vaultkeeps(creatorId, vaultId, keepId)
+VALUES
+  (
+    "cd5f28ba-d192-4c30-9434-b39c95fdfdfa",
+    2,
+    2
+  );
+SELECT
+  k.*,
+  v.*,
+  vk.id as vaultKeepId,
+  vk.vaultId as vaultId,
+  vk.keepId as keepId
+FROM
+  vaultkeeps vk
+  JOIN keeps k ON k.id = vk.keepId
+  JOIN vaults v ON v.id = vk.vaultId
+WHERE
+  vk.vaultId = 1;
 INSERT INTO
   vaults(name, description, isPrivate, creatorId)
 VALUES
@@ -99,23 +119,23 @@ VALUES
     "81e3908a-3997-4f25-bb36-b8d38060cde4"
   );
   /* SELECT
-    g.*,
-    g.id AS groupId,
-    a.name as creatorName,
-    a.picture as creatorPic
-  FROM
-    groups g
-    JOIN accounts a ON a.id = g.creatorId
-  WHERE
-    g.id = 3; */
+            g.*,
+            g.id AS groupId,
+            a.name as creatorName,
+            a.picture as creatorPic
+          FROM
+            groups g
+            JOIN accounts a ON a.id = g.creatorId
+          WHERE
+            g.id = 3; */
   /* SELECT
-    c.*,
-    g.*,
-    a.name,
-    a.picture
-  FROM
-    comments c
-    JOIN accounts a ON c.creatorId = a.id;
-    JOIN groups g ON c.groupId = g.id;
-  WHERE
-    groupId = 3; */
+            c.*,
+            g.*,
+            a.name,
+            a.picture
+          FROM
+            comments c
+            JOIN accounts a ON c.creatorId = a.id;
+            JOIN groups g ON c.groupId = g.id;
+          WHERE
+            groupId = 3; */

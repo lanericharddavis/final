@@ -20,12 +20,12 @@ namespace final.server.Services
 
     internal List<Keep> GetKeepsByProfileId(int profileId)
     {
-      return _keepsRepo.GetKeepsByProfileId(profileId);
+      return _profilesRepo.GetKeepsByProfileId(profileId);
     }
 
     internal List<Vault> GetVaultsByProfileId(int profileId)
     {
-      return _vaultsRepo.GetVaultsByProfileId(profileId);
+      return _profilesRepo.GetVaultsByProfileId(profileId);
     }
   }
 }

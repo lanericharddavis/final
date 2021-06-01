@@ -47,6 +47,20 @@ namespace final.server.Controllers
       }
     }
 
+    [HttpGet("{id}/keeps")]
+    public ActionResult<List<VaultKeepViewModel>> GetKeepsByVaultId(int id)
+    {
+      try
+      {
+        List<VaultKeepViewModel> keeps = _vaultsService.GetKeepsByVaultId(id);
+        return Ok(keeps);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
     [Authorize]
     [HttpPost]
     public async Task<ActionResult<Vault>> Create([FromBody] Vault vault)
