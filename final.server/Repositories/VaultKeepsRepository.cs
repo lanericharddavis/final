@@ -16,26 +16,28 @@ namespace final.server.Repositories
       _db = db;
     }
 
-    internal List<VaultKeep> GetAll()
-    {
-      throw new NotImplementedException();
-      // string sql = @"
-      // SELECT
-      //   vk.*,
-      //   v.*,
-      //   k.*,
-      //   a.*,
-      //   FROM vaultkeeps vk
-      //   JOIN accounts a ON a.id = vk.creatorId
-      //   JOIN 
-      //   JOIN
-      //   JOIN
-      // ";
-    }
 
-    internal VaultKeep GetById(int id)
+    internal VaultKeepViewModel GetById(int id)
     {
-      throw new NotImplementedException();
+      string sql = @"
+      SELECT
+      k.*,
+      v.*,
+      vk.id as vaultKeepId,
+      vk.vaultId as vaultId,
+      vk.keepId as keepId
+      FROM
+      vaultkeeps vk
+      JOIN keeps k ON k.id = vk.keepId
+      JOIN vaults v ON v.id = vk.vaultId
+      WHERE
+      vk.Id = @id;
+      ";
+      return _db.Query<VaultKeepViewModel, Profile, VaultKeepViewModel>(sql, (vk, p) =>
+{
+  vk.Creator = p;
+  return vk;
+}, new { id }).FirstOrDefault();
     }
 
     internal List<VaultKeepViewModel> GetKeepsByVaultId(int vaultId)
@@ -61,8 +63,8 @@ namespace final.server.Repositories
     {
       string sql = @"
       INSERT INTO
-      vaultkeeps(vaultId, keepId)
-      VALUES (@VaultId, @KeepId);
+      vaultkeeps(creatorId, vaultId, keepId)
+      VALUES (@CreatorId, @VaultId, @KeepId);
       SELECT LAST_INSERT_ID();
       ";
       newVaultKeep.Id = _db.ExecuteScalar<int>(sql, newVaultKeep);

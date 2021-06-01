@@ -14,14 +14,10 @@ namespace final.server.Services
       _vksRepo = vksRepo;
     }
 
-    internal List<VaultKeep> GetAll()
-    {
-      return _vksRepo.GetAll();
-    }
 
-    internal VaultKeep GetById(int id)
+    internal VaultKeepViewModel GetById(int id)
     {
-      VaultKeep blog = _vksRepo.GetById(id);
+      VaultKeepViewModel blog = _vksRepo.GetById(id);
       if (blog == null)
       {
         throw new Exception("Invalid VaultKeep Id");
@@ -36,8 +32,8 @@ namespace final.server.Services
 
     internal void Remove(int id, string creatorId)
     {
-      VaultKeep comment = GetById(id);
-      if (comment.CreatorId != creatorId)
+      VaultKeepViewModel vaultKeep = GetById(id);
+      if (vaultKeep.CreatorId != creatorId)
       {
         throw new Exception("You cannot delete another users VaultKeep");
       }

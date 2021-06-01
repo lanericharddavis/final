@@ -59,6 +59,18 @@ FROM
   JOIN keeps k ON k.id = vk.keepId
   JOIN vaults v ON v.id = vk.vaultId
 WHERE
+  vk.Id = @2;
+SELECT
+  k.*,
+  v.*,
+  vk.id as vaultKeepId,
+  vk.vaultId as vaultId,
+  vk.keepId as keepId
+FROM
+  vaultkeeps vk
+  JOIN keeps k ON k.id = vk.keepId
+  JOIN vaults v ON v.id = vk.vaultId
+WHERE
   vk.vaultId = 1;
 INSERT INTO
   vaults(name, description, isPrivate, creatorId)
@@ -119,23 +131,23 @@ VALUES
     "81e3908a-3997-4f25-bb36-b8d38060cde4"
   );
   /* SELECT
-            g.*,
-            g.id AS groupId,
-            a.name as creatorName,
-            a.picture as creatorPic
-          FROM
-            groups g
-            JOIN accounts a ON a.id = g.creatorId
-          WHERE
-            g.id = 3; */
+              g.*,
+              g.id AS groupId,
+              a.name as creatorName,
+              a.picture as creatorPic
+            FROM
+              groups g
+              JOIN accounts a ON a.id = g.creatorId
+            WHERE
+              g.id = 3; */
   /* SELECT
-            c.*,
-            g.*,
-            a.name,
-            a.picture
-          FROM
-            comments c
-            JOIN accounts a ON c.creatorId = a.id;
-            JOIN groups g ON c.groupId = g.id;
-          WHERE
-            groupId = 3; */
+              c.*,
+              g.*,
+              a.name,
+              a.picture
+            FROM
+              comments c
+              JOIN accounts a ON c.creatorId = a.id;
+              JOIN groups g ON c.groupId = g.id;
+            WHERE
+              groupId = 3; */

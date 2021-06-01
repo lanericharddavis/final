@@ -20,22 +20,9 @@ namespace final.server.Controllers
       _vksService = vksService;
     }
 
-    [HttpGet]
-    public ActionResult<List<VaultKeep>> GetAll()
-    {
-      try
-      {
-        List<VaultKeep> blogs = _vksService.GetAll();
-        return Ok(blogs);
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
 
     [HttpGet("{id}")]
-    public ActionResult<VaultKeep> GetById(int id)
+    public ActionResult<VaultKeepViewModel> GetById(int id)
     {
       try
       {
