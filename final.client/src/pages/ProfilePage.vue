@@ -47,6 +47,7 @@
         <div class="row">
           <div class="col">
             <img :src="state.activeProfile.picture" alt="">
+            {{ state.activeProfile }}
           </div>
         </div>
       </div>
@@ -59,6 +60,7 @@ import { computed, onMounted, reactive, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { profilesService } from '../services/ProfilesService'
 import { AppState } from '../AppState'
+import { logger } from '../utils/Logger'
 
 export default {
   name: 'ProfilePage',
@@ -78,7 +80,7 @@ export default {
         await profilesService.getVaultsByProfileId(route.params.id)
         await profilesService.getKeepsByProfileId(route.params.id)
       } catch (error) {
-        console.error(error)
+        logger.error(error)
       }
     })
     return {

@@ -3,7 +3,7 @@
     <div class="card-column masonry">
       <KeepComponent v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" />
     </div>
-    <keep-modal v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" />
+    <KeepModal v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" />
   </div>
 </template>
 
