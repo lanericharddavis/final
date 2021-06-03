@@ -14,7 +14,7 @@
         >
           <strong>{{ keepProp.name }}</strong>
         </button>
-        <router-link :to="{name: 'Profile', params:{id: keepProp.creator.id}}">
+        <router-link :to="{name: 'Profile', params:{id: keepProp.creatorId}}">
           <img :src="keepProp.creator.picture" class="circle-pic jump-up" alt="keeps owner profile picture">
         </router-link>
       </div>
@@ -27,6 +27,7 @@ import { reactive, computed } from 'vue'
 import { AppState } from '../AppState'
 import { profilesService } from '../services/ProfilesService'
 import { logger } from '../utils/Logger'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'KeepComponent',
@@ -37,12 +38,14 @@ export default {
     }
   },
   setup(props) {
+    const route = useRouter()
     const state = reactive({
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
       keeps: computed(() => AppState.keeps)
     })
     return {
+      route,
       state,
       async getProfile() {
         try {

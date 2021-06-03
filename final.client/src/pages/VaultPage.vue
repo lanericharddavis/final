@@ -1,17 +1,19 @@
 <template>
   <div class="container-fluid vault-page">
     <div class="row">
-      <div class="col">
+      <div v-if="state.activeVault" class="col">
         <h1>Vault: {{ state.activeVault.name }}</h1>
+        {{ state.vaults }}
       </div>
     </div>
     <div class="row">
-      <div class="col">
+      <div v-if="state.keeps" class="col">
         <h5>Keeps: {{ state.keeps.length }}</h5>
       </div>
     </div>
     <div class="card-column masonry">
       <KeepComponent v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" />
+      {{ state.keeps }}
     </div>
   </div>
 </template>

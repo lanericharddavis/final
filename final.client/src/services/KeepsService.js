@@ -22,9 +22,9 @@ class KeepsService {
     await api.put(`/api/keeps/${keep.id}`, keep)
   }
 
-  async remove(keep) {
-    await api.delete(`/api/keeps/${keep.id}`)
-    AppState.keeps = AppState.keeps.filter(x => x.id !== keep.id)
+  async remove(keepId) {
+    await api.delete(`/api/keeps/${keepId}`)
+    AppState.keeps = AppState.keeps.filter(x => x.id !== keepId)
   }
 }
 

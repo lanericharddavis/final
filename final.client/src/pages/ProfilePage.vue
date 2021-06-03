@@ -81,7 +81,7 @@
                 <label for="vaultNameInput" class="sr-only"></label>
                 <input type="text" class="form-control" id="vault-name-input" placeholder="Keep Description..." v-model="state.newKeep.description">
               </div>
-              <!-- <div class="form-group col-auto my-1">
+              <div class="form-group col-auto my-1">
                 <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect"></label>
                 <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" v-model="state.newVault.IsPrivate" required>
                   <option selected>
@@ -89,7 +89,7 @@
                   </option>
                   <VaultSelectionComponent v-for="Vaults in state.vaults" :key="Vaults.id" :vault-prop="Vaults" />
                 </select>
-              </div> -->
+              </div>
               <button type="submit" class="btn btn-primary mb-2">
                 Create Keep
               </button>
@@ -117,12 +117,7 @@ import Notification from '../utils/Notification'
 
 export default {
   name: 'ProfilePage',
-  // props: {
-  //   keepProp: {
-  //     type: Object,
-  //     required: true
-  //   }
-  // },
+
   setup(props) {
     const route = useRoute()
     const state = reactive({
@@ -137,9 +132,6 @@ export default {
       },
       newKeep: {}
     })
-    // watch(() => state.loading, () => {
-    //   profilesService.getActive(route.params.id)
-    // })
     onMounted(async() => {
       await profilesService.getProfile(route.params.id)
       await profilesService.getVaultsByProfileId(route.params.id)
@@ -150,7 +142,6 @@ export default {
       route,
       async createVault() {
         try {
-          debugger
           await vaultsService.create(state.newVault)
         } catch (error) {
           Notification.toast('not passing on the ProfilePage', 'warning')

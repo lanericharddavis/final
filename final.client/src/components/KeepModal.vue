@@ -45,7 +45,7 @@
                 </button>
               </div>
               <div class="col-md-2">
-                <i v-if="keepProp.creatorId !== state.account.Id" class="fas fa-trash-alt fa-2x hoverable" @click="remove(keepProp.id)" title="delete keep"></i>
+                <i v-if="keepProp.creatorId !== state.account.Id" class="fas fa-trash-alt fa-2x hoverable" @click="remove()" title="delete keep"></i>
               </div>
               <div class="col-md-2">
                 <router-link :to="{name: 'Profile', params:{id: keepProp.creatorId}}">
