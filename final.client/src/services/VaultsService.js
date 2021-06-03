@@ -15,7 +15,6 @@ class VaultsService {
     AppState.vaults = []
     const res = await api.get(`/api/vaults/${id}`)
     AppState.activeVault = res.data
-    await this.getById(id)
   }
 
   async getKeepsByVaultId(id) {

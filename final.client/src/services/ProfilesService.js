@@ -7,6 +7,7 @@ class ProfilesService {
     try {
       const res = await api.get('/api/profiles/' + id)
       AppState.profile = res.data
+      AppState.activeProfile = res.data
     } catch (err) {
       logger.error('Error: Cannot Get Profile', err)
     }
@@ -22,7 +23,7 @@ class ProfilesService {
     AppState.keeps = res.data
   }
 
-  async getActive(id) {
+  async setActiveProfile(id) {
     const res = await api.get(`api/profile/${id}/active`)
     AppState.activeProfile = res.data
   }

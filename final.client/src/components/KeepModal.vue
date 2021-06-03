@@ -39,28 +39,17 @@
               </div>
             </div>
             <div class="row">
-              <hr>
-              <div class="col-md-6">
-                <p>tag?</p>
-              </div>
-              <div class="col-md-6">
-                <div class="col-md-6">
-                  <p>tag?</p>
-                </div>
-              </div>
-            </div>
-            <div class="row">
               <div class="col-md-5">
                 <button class="btn btn-info">
                   Add To Vault
                 </button>
               </div>
               <div class="col-md-2">
-                <i class="fas fa-trash-alt fa-2x hoverable"></i>
+                <i v-if="keepProp.creatorId !== state.account.Id" class="fas fa-trash-alt fa-2x hoverable" @click="remove(keepProp.id)" title="delete keep"></i>
               </div>
               <div class="col-md-2">
                 <router-link :to="{name: 'Profile', params:{id: keepProp.creatorId}}">
-                  <img v-if="keepProp.creator.picture" :src="keepProp.creator.picture" class="circle-pic jump-up" alt="profile picture">
+                  <img v-if="keepProp.creator.picture" :src="keepProp.creator.picture" class="circle-pic jump-up" title="profile page" alt="profile picture">
                 </router-link>
               </div>
               <div class="col-md-3">
@@ -84,7 +73,9 @@
 <script>
 import { reactive, computed } from 'vue'
 import { AppState } from '../AppState'
-// import { keepsService } from '../services/KeepsService'
+import { logger } from '../utils/Logger'
+import { keepsService } from '../services/KeepsService'
+import Notification from '../utils/Notification'
 
 export default {
   name: 'KeepModal',
@@ -96,13 +87,25 @@ export default {
   },
   setup(props) {
     const state = reactive({
-      keeps: computed(() => AppState.activeKeep)
+      keeps: computed(() => AppState.activeKeep),
+      account: computed(() => AppState.account)
     })
+    // NOTE Doing this goes into endless loop
     // onMounted(async() => {
     //   await keepsService.getById(props.keepProp.id)
     // })
     return {
-      state
+      state,
+      async remove() {
+        try {
+          if (await Notification.confirmAction('Are you sure you want to delete this keep?', 'You won\'t be able to revert this.', '', 'Yes, Delete')) {
+            await keepsService.remove(props.keepProp.id)
+            Notification.toast('Successfully Deleted Keep', 'success')
+          }
+        } catch (error) {
+          logger.error(error)
+        }
+      }
     }
   },
   components: {}

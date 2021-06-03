@@ -25,6 +25,8 @@
 <script>
 import { reactive, computed } from 'vue'
 import { AppState } from '../AppState'
+import { profilesService } from '../services/ProfilesService'
+import { logger } from '../utils/Logger'
 
 export default {
   name: 'KeepComponent',
@@ -34,14 +36,21 @@ export default {
       required: true
     }
   },
-  setup() {
+  setup(props) {
     const state = reactive({
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
       keeps: computed(() => AppState.keeps)
     })
     return {
-      state
+      state,
+      async getProfile() {
+        try {
+          await profilesService.getProfile(props.keepProp.creatorId)
+        } catch (error) {
+          logger.error(error)
+        }
+      }
     }
   }
 }
