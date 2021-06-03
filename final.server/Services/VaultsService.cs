@@ -26,7 +26,6 @@ namespace final.server.Services
 
     internal Vault GetById(int id, string userId)
     {
-
       Vault vault = _vaultsRepo.GetById(id);
       if (vault == null)
       {
@@ -35,6 +34,10 @@ namespace final.server.Services
       if (vault.IsPrivate == true && userId != vault.CreatorId)
       {
         throw new Exception("Access Denied: Vault is set as Private");
+      }
+      if (vault.IsPrivate == true && userId == vault.CreatorId)
+      {
+        return vault;
       }
       return vault;
     }
@@ -63,8 +66,21 @@ namespace final.server.Services
       throw new Exception("Edit Not Permitted: You do not own this Vault.");
     }
 
-    internal List<VaultKeepViewModel> GetKeepsByVaultId(int vaultId)
+    internal List<VaultKeepViewModel> GetKeepsByVaultId(int vaultId, string userId)
     {
+      Vault vault = _vaultsRepo.GetById(vaultId);
+      if (vault == null)
+      {
+        throw new Exception("Invalid Id");
+      }
+      if (vault.IsPrivate == true && userId != vault.CreatorId)
+      {
+        throw new Exception("Access Denied: Vault is set as Private");
+      }
+      if (vault.IsPrivate == true && userId == vault.CreatorId)
+      {
+        return _vksRepo.GetKeepsByVaultId(vaultId);
+      }
       return _vksRepo.GetKeepsByVaultId(vaultId);
     }
 

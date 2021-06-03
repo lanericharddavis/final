@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using final.server.Models;
 using final.server.Repositories;
 
@@ -23,9 +24,32 @@ namespace final.server.Services
       return _profilesRepo.GetKeepsByProfileId(profileId);
     }
 
-    internal List<Vault> GetVaultsByProfileId(string profileId)
+    internal List<Vault> GetVaultsByProfileId(string profileId, string userId)
     {
-      return _profilesRepo.GetVaultsByProfileId(profileId);
+      List<Vault> vaults = _profilesRepo.GetVaultsByProfileId(profileId);
+      var publicVaults = new List<Vault>();
+      var privateVaults = new List<Vault>();
+      foreach (var vault in vaults)
+      {
+        if (vault.IsPrivate == false)
+        {
+          publicVaults.Add(vault);
+        }
+        else
+        {
+          privateVaults.Add(vault);
+        }
+
+      }
+      if (profileId != userId)
+      {
+        return publicVaults;
+      }
+      if (profileId == userId)
+      {
+        return vaults;
+      }
+      return vaults;
     }
   }
 }

@@ -36,10 +36,10 @@ namespace final.server.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<Vault>> GetById(int id)
     {
-      Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
       try
       {
-        Vault vault = _vaultsService.GetById(id, userInfo.Id);
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        Vault vault = _vaultsService.GetById(id, userInfo?.Id);
         return vault;
       }
       catch (Exception e)
@@ -54,7 +54,7 @@ namespace final.server.Controllers
       Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
       try
       {
-        List<VaultKeepViewModel> keeps = _vaultsService.GetKeepsByVaultId(id);
+        List<VaultKeepViewModel> keeps = _vaultsService.GetKeepsByVaultId(id, userInfo?.Id);
         return Ok(keeps);
       }
       catch (Exception e)

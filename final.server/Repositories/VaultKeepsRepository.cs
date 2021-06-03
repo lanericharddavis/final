@@ -45,9 +45,8 @@ namespace final.server.Repositories
       string sql = @"
       SELECT
       k.*,
-      v.*,
-      vk.id as vaultKeepId,
       vk.vaultId as vaultId,
+      vk.Id as vaultKeepId,
       vk.keepId as keepId
       FROM
       vaultkeeps vk
@@ -57,6 +56,11 @@ namespace final.server.Repositories
       vk.vaultId = @vaultId;
       ";
       return _db.Query<VaultKeepViewModel>(sql, new { vaultId }).ToList();
+      //       return _db.Query<Keep, VaultKeepViewModel, Keep>(sql, (k, vk) =>
+      // {
+      //   k.Id = vk.KeepId;
+      //   return k;
+      // }, splitOn: "id").ToList();
     }
 
     internal VaultKeep Create(VaultKeep newVaultKeep)

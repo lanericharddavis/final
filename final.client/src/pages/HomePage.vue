@@ -39,7 +39,7 @@ export default {
   -webkit-column-gap: 1em;
   -moz-column-gap: 1em;
   column-gap: 1em;
-   margin: 1.5em;
+   margin: 2.5em;
     padding: 0;
     -moz-column-gap: 1.5em;
     -webkit-column-gap: 1.5em;
@@ -47,17 +47,19 @@ export default {
     font-size: .85em;
 }
 .item {
-    display: inline-block;
+    display:inline-flex;
     background: #fff;
     margin: 0 0 1.5em;
     width: 100%;
   -webkit-transition:1s ease all;
-    box-sizing: border-box;
+    box-sizing:border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-shadow: 2px 2px 4px 0 #ccc;
 }
-.item img{max-width:100%;}
+.item img{
+  max-width:10%;
+  }
 
 @media only screen and (max-width: 320px) {
     .masonry {

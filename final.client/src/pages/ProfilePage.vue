@@ -3,7 +3,7 @@
     <h1>You Have Reached the Profile Page</h1>
     <div class="row">
       <div class="col-md-5">
-        <img :src="state.activeProfile.picture" alt="profile picture">
+        <img v-if="state.activeProfile.picture" :src="state.activeProfile.picture" alt="profile picture">
       </div>
       <div class="col-md-7">
         <div class="row">
@@ -29,7 +29,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <img src="//placehold.it/100x100" alt="">
+            {{ state.vaults }}
           </div>
         </div>
       </div>
@@ -46,8 +46,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <img :src="state.activeProfile.picture" alt="">
-            {{ state.activeProfile }}
+            {{ keepProp.creator }}
           </div>
         </div>
       </div>
@@ -56,32 +55,36 @@
 </template>
 
 <script>
-import { computed, onMounted, reactive, watch } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { profilesService } from '../services/ProfilesService'
 import { AppState } from '../AppState'
-import { logger } from '../utils/Logger'
+// import { logger } from '../utils/Logger'
 
 export default {
   name: 'ProfilePage',
+  props: {
+    keepProp: {
+      type: Object,
+      required: true
+    }
+  },
   setup() {
     const route = useRoute()
     const state = reactive({
-      activeProfile: computed(() => AppState.activeProfile)
+      activeProfile: computed(() => AppState.activeProfile),
+      account: computed(() => AppState.account),
+      user: computed(() => AppState.user),
+      vaults: computed(() => AppState.vaults),
+      keeps: computed(() => AppState.keeps)
     })
-    watch(() => state.loading, () => {
-      profilesService.getProfile(route.params.id)
-    })
+    // watch(() => state.loading, () => {
+    //   profilesService.getActive(route.params.id)
+    // })
     onMounted(async() => {
-      try {
-        if (!state.loading) {
-          await profilesService.getProfile(route.params.id)
-        }
-        await profilesService.getVaultsByProfileId(route.params.id)
-        await profilesService.getKeepsByProfileId(route.params.id)
-      } catch (error) {
-        logger.error(error)
-      }
+      await profilesService.getProfile(route.params.id)
+      await profilesService.getVaultsByProfileId(route.params.id)
+      await profilesService.getKeepsByProfileId(route.params.id)
     })
     return {
       state,

@@ -14,7 +14,7 @@
         >
           <strong>{{ keepProp.name }}</strong>
         </button>
-        <router-link :to="{name: 'Profile', params:{id: keepProp.creatorId}}">
+        <router-link :to="{name: 'Profile', params:{id: keepProp.creator.id}}">
           <img :src="keepProp.creator.picture" class="circle-pic jump-up" alt="keeps owner profile picture">
         </router-link>
       </div>
