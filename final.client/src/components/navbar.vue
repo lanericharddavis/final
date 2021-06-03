@@ -29,7 +29,7 @@
           </router-link>
         </li>
         <li class="nav-item" title="profile page">
-          <router-link :to="{ name: 'Profile' }" class="nav-link">
+          <router-link :to="{ name: 'Profile', params: {id:account.id} }" class="nav-link">
             Profile
           </router-link>
         </li>
@@ -100,6 +100,7 @@ export default {
     return {
       state,
       user: computed(() => AppState.user),
+      account: computed(() => AppState.account),
       async login() {
         AuthService.loginWithPopup()
       },

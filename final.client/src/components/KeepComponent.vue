@@ -14,8 +14,8 @@
         >
           <strong>{{ keepProp.name }}</strong>
         </button>
-        <router-link :to="{name: 'Profile', params:{id: keepProp.creatorId}}">
-          <img :src="keepProp.creator.picture" class="circle-pic jump-up" alt="keeps owner profile picture">
+        <router-link :to="{name: 'Profile', params:{id: keepProp.creator.id}}">
+          <img v-if="keepProp.creator.picture" :src="keepProp.creator.picture" class="circle-pic jump-up" alt="keeps owner profile picture">
         </router-link>
       </div>
     </div>
@@ -42,6 +42,7 @@ export default {
     const state = reactive({
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
+      profile: computed(() => AppState.profile),
       keeps: computed(() => AppState.keeps)
     })
     return {
@@ -49,6 +50,7 @@ export default {
       state,
       async getProfile() {
         try {
+          console.log(props.keepProp.creator)
           await profilesService.getProfile(props.keepProp.creatorId)
         } catch (error) {
           logger.error(error)

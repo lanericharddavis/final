@@ -39,6 +39,17 @@
               </div>
             </div>
             <div class="row">
+              <!-- <div class="form">
+                <div class="form-group col-auto my-1">
+                  <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect"></label>
+                  <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" v-model="state.newVault.IsPrivate" required>
+                    <option selected>
+                      Insert Into Vault...
+                    </option>
+                    <VaultSelectionComponent v-for="Vaults in state.vaults" :key="Vaults.id" :vault-prop="Vaults" />
+                  </select>
+                </div>
+              </div> -->
               <div class="col-md-5">
                 <button class="btn btn-info">
                   Add To Vault
