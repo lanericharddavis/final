@@ -5,9 +5,8 @@
         <h1>Vault: {{ state.activeVault.name }}</h1>
         {{ state.vaults }}
       </div>
-      <!--TODO Move to line below after figuring out how to dig into vault     v-if="state.account.id === keepProp.creator.id"  -->
-      <div class="col-md-2">
-        <i class="fas fa-trash-alt fa-2x hoverable" @click="remove()" title="delete vault"></i>
+      <div v-if="state.activeVault" class="col-md-2">
+        <i v-if="state.account.id === state.activeVault.creatorId" class="fas fa-trash-alt fa-2x hoverable" @click="remove()" title="delete vault"></i>
       </div>
     </div>
     <div class="row">
@@ -44,7 +43,8 @@ export default {
     const route = useRoute()
     const state = reactive({
       activeVault: computed(() => AppState.activeVault),
-      keeps: computed(() => AppState.keeps)
+      keeps: computed(() => AppState.keeps),
+      account: computed(() => AppState.account)
 
     })
     onMounted(async() => {

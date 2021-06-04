@@ -49,7 +49,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <button class="btn btn-info" @click="removeFromVault">
+              <button v-if="state.account.id === keepProp.creatorId" class="btn btn-info" @click="removeFromVault">
                 Remove From Vault
               </button>
             </div>
