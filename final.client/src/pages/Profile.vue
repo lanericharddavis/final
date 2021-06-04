@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-page">
+  <div class="container-fluid profile-page">
     <h1>You Have Reached the Profile Page</h1>
     <div class="row">
       <div class="col-md-5">
