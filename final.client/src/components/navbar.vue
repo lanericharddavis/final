@@ -18,6 +18,7 @@
       aria-controls="navbarText"
       aria-expanded="false"
       aria-label="Toggle navigation"
+      title="dropdown navigation menu"
     >
       <span class="navbar-toggler-icon" />
     </button>

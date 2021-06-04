@@ -1,9 +1,13 @@
 <template>
   <div class="container-fluid vault-page">
     <div class="row">
-      <div v-if="state.activeVault" class="col">
+      <div v-if="state.activeVault" class="col-md-5">
         <h1>Vault: {{ state.activeVault.name }}</h1>
         {{ state.vaults }}
+      </div>
+      <!--TODO Move to line below after figuring out how to dig into vault     v-if="state.account.id === keepProp.creator.id"  -->
+      <div class="col-md-2">
+        <i class="fas fa-trash-alt fa-2x hoverable" @click="remove()" title="delete vault"></i>
       </div>
     </div>
     <div class="row">
@@ -24,6 +28,8 @@ import { useRoute } from 'vue-router'
 // import { profilesService } from '../services/ProfilesService'
 import { vaultsService } from '../services/VaultsService'
 import { AppState } from '../AppState'
+import { logger } from '../utils/Logger'
+import Notification from '../utils/Notification'
 
 export default {
   name: 'VaultPage',
@@ -46,7 +52,19 @@ export default {
     })
     return {
       state,
-      route
+      route,
+      async remove() {
+        try {
+          if (await Notification.confirmAction('Are you sure you want to delete this vault?', 'You won\'t be able to revert this.', '', 'Yes, Delete')) {
+            await vaultsService.remove(state.activeVault.id)
+            Notification.toast('Successfully Deleted Vault', 'success')
+
+            // $('#keepModal' + props.keepProp.id).modal('hide')
+          }
+        } catch (error) {
+          logger.error(error)
+        }
+      }
     }
   },
   components: {}

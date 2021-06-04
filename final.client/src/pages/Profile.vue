@@ -23,7 +23,7 @@
           <div class="col-md-1">
             <h3>Vaults</h3>
           </div>
-          <div class="col-md-10 d-flex align-items-center">
+          <div v-if="state.account.id === state.profile.id" class="col-md-10 d-flex align-items-center">
             <form class="form-inline" @submit.prevent="createVault">
               <div class="form-group mx-sm-3 mb-2">
                 <label for="vaultNameInput" class="sr-only"></label>
@@ -41,10 +41,10 @@
                   <option selected>
                     Vault Privacy...
                   </option>
-                  <option value="true">
+                  <option :value="true">
                     Private
                   </option>
-                  <option value="false">
+                  <option :value="false">
                     Public
                   </option>
                 </select>
@@ -67,19 +67,37 @@
           <div class="col-md-1">
             <h3>Keeps</h3>
           </div>
-          <div class="col-md-10 d-flex align-items-center">
+          <div v-if="state.account.id === state.profile.id" class="col-md-10 d-flex align-items-center">
             <form class="form-inline" @submit.prevent="createKeep">
               <div class="form-group mx-sm-3 mb-2">
                 <label for="vaultNameInput" class="sr-only"></label>
-                <input type="text" class="form-control" id="vault-name-input" placeholder="Keep Name..." v-model="state.newKeep.name">
+                <input type="text"
+                       class="form-control"
+                       id="vault-name-input"
+                       placeholder="Keep Name..."
+                       v-model="state.newKeep.name"
+                       required
+                >
               </div>
               <div class="form-group mx-sm-3 mb-2">
                 <label for="vaultNameInput" class="sr-only"></label>
-                <input type="text" class="form-control" id="vault-name-input" placeholder="Keep Img Url..." v-model="state.newKeep.img">
+                <input type="text"
+                       class="form-control"
+                       id="vault-name-input"
+                       placeholder="Keep Img Url..."
+                       v-model="state.newKeep.img"
+                       required
+                >
               </div>
               <div class="form-group mx-sm-3 mb-2">
                 <label for="vaultNameInput" class="sr-only"></label>
-                <input type="text" class="form-control" id="vault-name-input" placeholder="Keep Description..." v-model="state.newKeep.description">
+                <input type="text"
+                       class="form-control"
+                       id="vault-name-input"
+                       placeholder="Keep Description..."
+                       v-model="state.newKeep.description"
+                       required
+                >
               </div>
               <button type="submit" class="btn btn-primary mb-2">
                 Create Keep
@@ -121,7 +139,9 @@ export default {
       newVault: {
         creatorId: route.params.id
       },
-      newKeep: {}
+      newKeep: {
+        creatorId: route.params.id
+      }
     })
     onMounted(async() => {
       await profilesService.getProfile(route.params.id)
@@ -134,6 +154,7 @@ export default {
       async createVault() {
         try {
           await vaultsService.create(state.newVault)
+          state.newVault = {}
         } catch (error) {
           Notification.toast('not passing on the ProfilePage', 'warning')
         }
@@ -141,6 +162,7 @@ export default {
       async createKeep() {
         try {
           await keepsService.create(state.newKeep)
+          state.newKeep = {}
         } catch (error) {
           Notification.toast('not passing on the ProfilePage', 'warning')
         }

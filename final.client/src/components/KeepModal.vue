@@ -1,14 +1,14 @@
 <template>
-  <div class="modal-body">
+  <div v-if="keepProp"
+       class="modal"
+       :id="'keepModal' + keepProp.id"
+       tabindex="-1"
+       role="dialog"
+       aria-labelledby="Keep Modal"
+       aria-hidden="true"
+  >
     <div class="container-fluid keep-modal">
-      <div v-if="keepProp"
-           class="modal"
-           :id="'keepModal' + keepProp.id"
-           tabindex="-1"
-           role="dialog"
-           aria-labelledby="Keep Modal"
-           aria-hidden="true"
-      >
+      <div>
         <div class="row main-row">
           <div class="col-md-6 p-2">
             <img v-if="keepProp.img" :src="keepProp.img" class="modal-img" alt="">
@@ -28,9 +28,19 @@
                 <p>{{ keepProp.keeps }}</p>
               </div>
             </div>
-            <div class="row">
-              <div class="col">
+            <div class="row justify-content-between">
+              <div class="col-md-6">
                 <h1>{{ keepProp.name }}</h1>
+              </div>
+              <div class="col-md-5">
+                <div class="row">
+                  <router-link :to="{name: 'Profile', params:{id: keepProp.creatorId}}" data-dismiss="modal">
+                    <img v-if="keepProp.creator.picture" :src="keepProp.creator.picture" class="circle-pic jump-up" title="profile page" alt="profile picture">
+                  </router-link>
+                </div>
+                <div class="row">
+                  <strong><p>{{ keepProp.creator.name }}</p></strong>
+                </div>
               </div>
             </div>
             <div class="row">
@@ -38,40 +48,36 @@
                 <p>{{ keepProp.description }}</p>
               </div>
             </div>
-            <div class="row">
-              <!-- <div class="form">
+            <div class="form row align-items-center">
+              <div class="col-md-6">
                 <div class="form-group col-auto my-1">
                   <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect"></label>
-                  <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" v-model="state.newVault.IsPrivate" required>
+                  <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                    <!-- v-model="state.newVault.IsPrivate" required -->
                     <option selected>
                       Insert Into Vault...
+                    </option>
+                    <option value="1">
+                      option1
                     </option>
                     <VaultSelectionComponent v-for="Vaults in state.vaults" :key="Vaults.id" :vault-prop="Vaults" />
                   </select>
                 </div>
-              </div> -->
-              <div class="col-md-5">
+              </div>
+              <div class="col-md-6">
                 <button class="btn btn-info">
                   Add To Vault
                 </button>
               </div>
-              <div class="col-md-2">
-                <i v-if="keepProp.creatorId !== state.account.Id" class="fas fa-trash-alt fa-2x hoverable" @click="remove()" title="delete keep"></i>
-              </div>
-              <div class="col-md-2">
-                <router-link :to="{name: 'Profile', params:{id: keepProp.creatorId}}">
-                  <img v-if="keepProp.creator.picture" :src="keepProp.creator.picture" class="circle-pic jump-up" title="profile page" alt="profile picture">
-                </router-link>
-              </div>
-              <div class="col-md-3">
-                <strong><p>{{ keepProp.creator.name }}</p></strong>
-              </div>
             </div>
-            <div class="row">
-              <div class="modal-footer">
+            <div class="row mt-5">
+              <div class="modal-footer col-md-12 justify-content-between">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                   Close
                 </button>
+                <div v-if="state.account.id === keepProp.creator.id" class="col-md-2">
+                  <i class="fas fa-trash-alt fa-2x hoverable" @click="remove()" title="delete keep" data-dismiss="modal"></i>
+                </div>
               </div>
             </div>
           </div>
@@ -85,8 +91,10 @@
 import { reactive, computed } from 'vue'
 import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
-import { keepsService } from '../services/KeepsService'
 import Notification from '../utils/Notification'
+import { keepsService } from '../services/KeepsService'
+import { useRouter } from 'vue-router'
+// import $ from 'jquery'
 
 export default {
   name: 'KeepModal',
@@ -97,6 +105,7 @@ export default {
     }
   },
   setup(props) {
+    const route = useRouter()
     const state = reactive({
       keeps: computed(() => AppState.activeKeep),
       account: computed(() => AppState.account)
@@ -107,11 +116,14 @@ export default {
     // })
     return {
       state,
+      route,
       async remove() {
         try {
           if (await Notification.confirmAction('Are you sure you want to delete this keep?', 'You won\'t be able to revert this.', '', 'Yes, Delete')) {
             await keepsService.remove(props.keepProp.id)
             Notification.toast('Successfully Deleted Keep', 'success')
+
+            // $('#keepModal' + props.keepProp.id).modal('hide')
           }
         } catch (error) {
           logger.error(error)

@@ -2,7 +2,9 @@
   <div class="vault-component card">
     <div class="card-body">
       <router-link :to="{name: 'Vault', params:{id: vaultProp.id}}">
-        <h3>{{ vaultProp.name }}</h3>
+        <h3 title="vault page">
+          {{ vaultProp.name }}
+        </h3>
       </router-link>
     </div>
   </div>

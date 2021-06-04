@@ -11,11 +11,12 @@
                 type="button"
                 data-toggle="modal"
                 :data-target="'#keepModal' + keepProp.id"
+                title="view keep details"
         >
           <strong>{{ keepProp.name }}</strong>
         </button>
         <router-link :to="{name: 'Profile', params:{id: keepProp.creator.id}}">
-          <img v-if="keepProp.creator.picture" :src="keepProp.creator.picture" class="circle-pic jump-up" alt="keeps owner profile picture">
+          <img v-if="keepProp.creator.picture" :src="keepProp.creator.picture" class="circle-pic jump-up" alt="keeps owner profile picture" title="keeps owner's profile">
         </router-link>
       </div>
     </div>
@@ -43,7 +44,8 @@ export default {
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
       profile: computed(() => AppState.profile),
-      keeps: computed(() => AppState.keeps)
+      keeps: computed(() => AppState.keeps),
+      activeVault: computed(() => AppState.activeVault)
     })
     return {
       route,

@@ -1,9 +1,7 @@
 <template>
-  <div class="vault-selection-component">
-    <option :value="vaultProp.id">
-      <h3>{{ vaultProp.name }}</h3>
-    </option>
-  </div>
+  <option :value="vaultProp.id">
+    <h3>{{ vaultProp.name }}</h3>
+  </option>
 </template>
 
 <script>

@@ -8,7 +8,6 @@ class KeepsService {
 
   async getAll() {
     const res = await api.get('/api/keeps')
-    console.log(res.data)
     AppState.keeps = res.data
   }
 
