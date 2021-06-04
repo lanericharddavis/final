@@ -2,10 +2,11 @@
 import router from '../router'
 import { api } from './AxiosService'
 class VaultKeepsService {
-  // async create(keepId, vaultId) {
-  //   const res = await api.post(`/api/vaults/${vaultId}/keeps/${keepId}`)
-  //   AppState.vaults.push(res.data)
-  // }
+  async create(newVaultKeep) {
+    // const res =
+    await api.post('/api/vaultkeeps', newVaultKeep)
+    // AppState.vaults.push(res.data)
+  }
 
   async removeFromVault(vaultKeepId) {
     // const res =

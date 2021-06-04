@@ -10,20 +10,20 @@
     <div class="container-fluid keep-modal">
       <div>
         <div class="row main-row">
-          <div class="col-md-6 p-2">
+          <div class="col-md-6 col-12 p-2">
             <img v-if="keepProp.img" :src="keepProp.img" class="modal-img" alt="">
           </div>
-          <div class="col-md-6 pt-5 pl-2">
+          <div class="col-md-6 col-12 pt-5 pl-2">
             <div class="row justify-content-center">
-              <div class="col-md-4">
+              <div class="col-md-4 col-3">
                 <i class="fas fa-eye fa-2x"></i>
                 <p>{{ keepProp.views }}</p>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-4 col-3">
                 <i class="fas fa-share-alt fa-2x"></i>
                 <p>{{ keepProp.shares }}</p>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-4 col-3">
                 <i class="fas fa-folder fa-2x"></i>
                 <p>{{ keepProp.keeps }}</p>
               </div>
@@ -35,11 +35,13 @@
               <div class="col-md-5">
                 <div class="row">
                   <router-link :to="{name: 'Profile', params:{id: keepProp.creatorId}}" data-dismiss="modal">
-                    <img v-if="keepProp.creator.picture" :src="keepProp.creator.picture" class="circle-pic jump-up" title="profile page" alt="profile picture">
+                    <img v-if="keepProp.creator.picture" :src="keepProp.creator.picture" class="circle-pic jump-up ml-3" title="profile page" alt="profile picture">
                   </router-link>
                 </div>
                 <div class="row">
-                  <strong><p>{{ keepProp.creator.name }}</p></strong>
+                  <div class="col ml-3">
+                    <strong><p>{{ keepProp.creator.name }}</p></strong>
+                  </div>
                 </div>
               </div>
             </div>
@@ -48,27 +50,27 @@
                 <p>{{ keepProp.description }}</p>
               </div>
             </div>
-            <div class="form row align-items-center" @submit.prevent="addKeepToVault">
+            <form class="form row align-items-center mt-2" @submit.prevent="addKeepToVault">
               <div class="col-md-6">
                 <div class="form-group col-auto my-1">
                   <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect"></label>
-                  <select @click="getVaultsByProfileId()" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                    <!--TODO move this into the select above ^^^ after you figure out how to actually do this         v-model="state.newKeepInVault.id" -->
+                  <select @click="getVaultsByProfileId()" class="custom-select mr-sm-2" id="inlineFormCustomSelect" v-model="state.newVaultKeep.vaultId">
+                    <!--TODO ^^^^  v-model="state.vaultId.id" -->
                     <option selected>
                       Insert Into Vault...
                     </option>
-                    <option v-for="Vaults in state.vaults" :key="Vaults.id">
+                    <option v-for="Vaults in state.vaults" :key="Vaults.id" :value="Vaults.id" @click="addKeepToVault(Vaults.id)">
                       {{ Vaults.name }}
                     </option>
                   </select>
                 </div>
               </div>
               <div class="col-md-6">
-                <button class="btn btn-info" type="submit">
+                <button class="btn btn-info ml-3" type="submit">
                   Add To Vault
                 </button>
               </div>
-            </div>
+            </form>
             <div class="row mt-5">
               <div class="modal-footer col-md-12 justify-content-between">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -93,7 +95,7 @@ import { logger } from '../utils/Logger'
 import Notification from '../utils/Notification'
 import { keepsService } from '../services/KeepsService'
 import { profilesService } from '../services/ProfilesService'
-// import { vaultKeepsService } from '../services/vaultKeepsService'
+import { vaultKeepsService } from '../services/VaultKeepsService'
 import { useRouter } from 'vue-router'
 // import $ from 'jquery'
 
@@ -110,16 +112,12 @@ export default {
     const state = reactive({
       keeps: computed(() => AppState.activeKeep),
       vaults: computed(() => AppState.vaults),
-      account: computed(() => AppState.account)
-      // newKeepInVault: {
-      //   name: props.keepProp.name,
-      //   creatorId: props.keepProp.creatorId,
-      //   description: props.keepProp.description,
-      //   img: props.keepProp.img,
-      //   views: props.keepProp.views,
-      //   shares: props.keepProp.shares,
-      //   keeps: props.keepProp.keeps
-      // }
+      account: computed(() => AppState.account),
+      // vaultId: {},
+      newVaultKeep: {
+        creatorId: props.keepProp.creatorId,
+        keepId: props.keepProp.id
+      }
     })
     return {
       state,
@@ -131,14 +129,15 @@ export default {
           logger.error(error)
         }
       },
-      // async addKeepToVault() {
-      //   try {
-      //     Vaults.id
-      //     await vaultKeepsService.newVaultKeep(props.keepProp.id)
-      //   } catch (error) {
-      //     logger.error(error)
-      //   }
-      // },
+      async addKeepToVault() {
+        try {
+          // debugger
+          // Vaults.id
+          await vaultKeepsService.create(state.newVaultKeep)
+        } catch (error) {
+          logger.error(error)
+        }
+      },
       async remove() {
         try {
           if (await Notification.confirmAction('Are you sure you want to delete this keep?', 'You won\'t be able to revert this.', '', 'Yes, Delete')) {
