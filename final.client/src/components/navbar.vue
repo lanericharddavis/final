@@ -30,13 +30,8 @@
           </router-link>
         </li>
         <li class="nav-item" title="profile page">
-          <router-link :to="{ name: 'Profile', params: {id:account.id} }" class="nav-link">
+          <router-link :to="{name: 'Profile', params:{id: account.id}}" class="nav-link">
             Profile
-          </router-link>
-        </li>
-        <li class="nav-item" title="about page">
-          <router-link :to="{ name: 'About' }" class="nav-link">
-            About
           </router-link>
         </li>
       </ul>

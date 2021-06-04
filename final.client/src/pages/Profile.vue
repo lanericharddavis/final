@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import { computed, onMounted, reactive } from 'vue'
+import { computed, onMounted, reactive, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { profilesService } from '../services/ProfilesService'
 import { AppState } from '../AppState'
@@ -146,6 +146,13 @@ export default {
       await profilesService.getProfile(route.params.id)
       await profilesService.getVaultsByProfileId(route.params.id)
       await profilesService.getKeepsByProfileId(route.params.id)
+    })
+    watchEffect(async() => {
+      if (AppState.account.id) {
+        await profilesService.getProfile(route.params.id)
+        await profilesService.getVaultsByProfileId(route.params.id)
+        await profilesService.getKeepsByProfileId(route.params.id)
+      }
     })
     return {
       state,

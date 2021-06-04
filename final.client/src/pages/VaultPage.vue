@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { computed, onMounted, reactive } from 'vue'
+import { computed, onMounted, reactive, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 // import { profilesService } from '../services/ProfilesService'
 import { vaultsService } from '../services/VaultsService'
@@ -50,6 +50,12 @@ export default {
     onMounted(async() => {
       await vaultsService.getById(route.params.id)
       await vaultsService.getKeepsByVaultId(route.params.id)
+    })
+    watchEffect(async() => {
+      if (AppState.account.id) {
+        await vaultsService.getById(route.params.id)
+        await vaultsService.getKeepsByVaultId(route.params.id)
+      }
     })
     return {
       state,

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { computed, onMounted, reactive } from 'vue'
+import { computed, onMounted, reactive, watchEffect } from 'vue'
 import { AppState } from '../AppState'
 import { keepsService } from '../services/KeepsService'
 import KeepModal from '../components/KeepModal.vue'
@@ -22,6 +22,11 @@ export default {
     })
     onMounted(async() => {
       await keepsService.getAll()
+    })
+    watchEffect(async() => {
+      if (state.keeps) {
+        await keepsService.getAll()
+      }
     })
     return {
       state

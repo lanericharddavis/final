@@ -50,7 +50,7 @@
                 <p>{{ keepProp.description }}</p>
               </div>
             </div>
-            <form class="form row align-items-center mt-2" @submit.prevent="addKeepToVault">
+            <form v-if="state.account.id !== state.user.id" class="form row align-items-center mt-2" @submit.prevent="addKeepToVault">
               <div class="col-md-6">
                 <div class="form-group col-auto my-1">
                   <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect"></label>
@@ -113,6 +113,7 @@ export default {
       keeps: computed(() => AppState.activeKeep),
       vaults: computed(() => AppState.vaults),
       account: computed(() => AppState.account),
+      user: computed(() => AppState.user),
       // vaultId: {},
       newVaultKeep: {
         creatorId: props.keepProp.creatorId,
@@ -134,6 +135,7 @@ export default {
           // debugger
           // Vaults.id
           await vaultKeepsService.create(state.newVaultKeep)
+          Notification.toast('This Keep has been added to your Vault!', 'success')
         } catch (error) {
           logger.error(error)
         }
