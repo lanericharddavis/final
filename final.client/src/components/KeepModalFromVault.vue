@@ -7,7 +7,7 @@
        aria-labelledby="Keep Modal"
        aria-hidden="true"
   >
-    <div class="container-fluid keep-modal">
+    <div class="container-fluid keep-modal-from-vault">
       <div>
         <div class="row main-row">
           <div class="col-md-6 p-2">
@@ -48,24 +48,10 @@
                 <p>{{ keepProp.description }}</p>
               </div>
             </div>
-            <div class="form row align-items-center" @submit.prevent="addKeepToVault">
-              <div class="col-md-6">
-                <div class="form-group col-auto my-1">
-                  <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect"></label>
-                  <select @click="getVaultsByProfileId()" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                    <!--TODO move this into the select above ^^^ after you figure out how to actually do this         v-model="state.newKeepInVault.id" -->
-                    <option selected>
-                      Insert Into Vault...
-                    </option>
-                    <VaultSelectionComponent v-for="Vaults in state.vaults" :key="Vaults.id" :vault-prop="Vaults" />
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <button class="btn btn-info" type="submit">
-                  Add To Vault
-                </button>
-              </div>
+            <div class="col-md-6">
+              <button class="btn btn-info" @click="removeFromVault">
+                Remove From Vault
+              </button>
             </div>
             <div class="row mt-5">
               <div class="modal-footer col-md-12 justify-content-between">
@@ -95,7 +81,7 @@ import { useRouter } from 'vue-router'
 // import $ from 'jquery'
 
 export default {
-  name: 'KeepModal',
+  name: 'KeepModalFromVault',
   props: {
     keepProp: {
       type: Object,
@@ -128,20 +114,18 @@ export default {
           logger.error(error)
         }
       },
-      // async addKeepToVault() {
+      // async removeFromVault(){
       //   try {
-      //     AppState.vaults.push(state.newKeepInVault)
+
       //   } catch (error) {
       //     logger.error(error)
       //   }
-      // },
+      // }
       async remove() {
         try {
           if (await Notification.confirmAction('Are you sure you want to delete this keep?', 'You won\'t be able to revert this.', '', 'Yes, Delete')) {
             await keepsService.remove(props.keepProp.id)
             Notification.toast('Successfully Deleted Keep', 'success')
-
-            // $('#keepModal' + props.keepProp.id).modal('hide')
           }
         } catch (error) {
           logger.error(error)

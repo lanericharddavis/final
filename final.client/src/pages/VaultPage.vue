@@ -17,8 +17,8 @@
     </div>
     <div class="card-columns masonry">
       <KeepComponent v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" />
-      {{ state.keeps }}
     </div>
+    <KeepModalFromVault v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" />
   </div>
 </template>
 

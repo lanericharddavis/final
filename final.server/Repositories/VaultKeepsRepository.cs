@@ -47,20 +47,21 @@ namespace final.server.Repositories
       k.*,
       vk.vaultId as vaultId,
       vk.Id as vaultKeepId,
-      vk.keepId as keepId
+      vk.keepId as keepId,
+      a.*
       FROM
       vaultkeeps vk
       JOIN keeps k ON k.id = vk.keepId
       JOIN vaults v ON v.id = vk.vaultId
+      JOIN accounts a ON a.id = k.creatorId
       WHERE
       vk.vaultId = @vaultId;
       ";
-      return _db.Query<VaultKeepViewModel>(sql, new { vaultId }).ToList();
-      //       return _db.Query<Keep, VaultKeepViewModel, Keep>(sql, (k, vk) =>
-      // {
-      //   k.Id = vk.KeepId;
-      //   return k;
-      // }, splitOn: "id").ToList();
+      return _db.Query<VaultKeepViewModel, Profile, VaultKeepViewModel>(sql, (k, p) =>
+      {
+        k.Creator = p;
+        return k;
+      }, new { vaultId }).ToList();
     }
 
     internal VaultKeep Create(VaultKeep newVaultKeep)
