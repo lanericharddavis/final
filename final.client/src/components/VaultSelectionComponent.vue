@@ -1,5 +1,5 @@
 <template>
-  <option :value="vaultProp.id">
+  <option class="vault-selection-component" :value="vaultProp.id">
     <h3>{{ vaultProp.name }}</h3>
   </option>
 </template>

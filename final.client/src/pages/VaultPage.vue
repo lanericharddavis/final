@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid vault-page">
-    <div class="row">
+    <div class="row align-items-center">
       <div v-if="state.activeVault" class="col-md-5">
         <h1>Vault: {{ state.activeVault.name }}</h1>
         {{ state.vaults }}
@@ -30,6 +30,7 @@ import { vaultsService } from '../services/VaultsService'
 import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
 import Notification from '../utils/Notification'
+import router from '../router'
 
 export default {
   name: 'VaultPage',
@@ -56,9 +57,10 @@ export default {
       async remove() {
         try {
           if (await Notification.confirmAction('Are you sure you want to delete this vault?', 'You won\'t be able to revert this.', '', 'Yes, Delete')) {
-            await vaultsService.remove(state.activeVault.id)
+            await vaultsService.remove(route.params.id)
             Notification.toast('Successfully Deleted Vault', 'success')
-
+            router.go(-1)
+            // router.push({ path: 'Profile', params: { id: route.params.id } })
             // $('#keepModal' + props.keepProp.id).modal('hide')
           }
         } catch (error) {

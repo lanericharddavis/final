@@ -1,24 +1,22 @@
 <template>
-  <div class="keep-component">
-    <div class="card item shadow rounded-corners mb-4 mt-1">
-      <img v-if="keepProp.img"
-           :src="keepProp.img"
-           class="rounded-corners"
-           alt=""
+  <div class="keep-component card item shadow rounded-corners mb-4 mt-1">
+    <img v-if="keepProp.img"
+         :src="keepProp.img"
+         class="rounded-corners"
+         alt=""
+    >
+    <div class="card-img-overlay img d-flex align-items-end justify-content-between">
+      <button class="card-title btn btn-info text-light hoverable"
+              type="button"
+              data-toggle="modal"
+              :data-target="'#keepModal' + keepProp.id"
+              title="view keep details"
       >
-      <div class="card-img-overlay d-flex align-items-end justify-content-between">
-        <button class="card-title btn btn-info text-light hoverable"
-                type="button"
-                data-toggle="modal"
-                :data-target="'#keepModal' + keepProp.id"
-                title="view keep details"
-        >
-          <strong>{{ keepProp.name }}</strong>
-        </button>
-        <router-link :to="{name: 'Profile', params:{id: keepProp.creator.id}}">
-          <img v-if="keepProp.creator.picture" :src="keepProp.creator.picture" class="circle-pic jump-up" alt="keeps owner profile picture" title="keeps owner's profile">
-        </router-link>
-      </div>
+        <strong>{{ keepProp.name }}</strong>
+      </button>
+      <router-link :to="{name: 'Profile', params:{id: keepProp.creator.id}}">
+        <img v-if="keepProp.creator.picture" :src="keepProp.creator.picture" class="circle-pic jump-up" alt="keeps owner profile picture" title="keeps owner's profile">
+      </router-link>
     </div>
   </div>
 </template>

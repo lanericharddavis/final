@@ -48,24 +48,20 @@
                 <p>{{ keepProp.description }}</p>
               </div>
             </div>
-            <div class="form row align-items-center">
+            <div class="form row align-items-center" @submit.prevent="addKeepToVault">
               <div class="col-md-6">
                 <div class="form-group col-auto my-1">
                   <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect"></label>
-                  <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                    <!-- v-model="state.newVault.IsPrivate" required -->
+                  <select @click="getVaultsByProfileId()" class="custom-select mr-sm-2" id="inlineFormCustomSelect" v-model="state.newKeepInVault.id">
                     <option selected>
                       Insert Into Vault...
-                    </option>
-                    <option value="1">
-                      option1
                     </option>
                     <VaultSelectionComponent v-for="Vaults in state.vaults" :key="Vaults.id" :vault-prop="Vaults" />
                   </select>
                 </div>
               </div>
               <div class="col-md-6">
-                <button class="btn btn-info">
+                <button class="btn btn-info" type="submit">
                   Add To Vault
                 </button>
               </div>
@@ -93,6 +89,7 @@ import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
 import Notification from '../utils/Notification'
 import { keepsService } from '../services/KeepsService'
+import { profilesService } from '../services/ProfilesService'
 import { useRouter } from 'vue-router'
 // import $ from 'jquery'
 
@@ -108,15 +105,35 @@ export default {
     const route = useRouter()
     const state = reactive({
       keeps: computed(() => AppState.activeKeep),
+      vaults: computed(() => AppState.vaults),
       account: computed(() => AppState.account)
+      // newKeepInVault: {
+      //   name: props.keepProp.name,
+      //   creatorId: props.keepProp.creatorId,
+      //   description: props.keepProp.description,
+      //   img: props.keepProp.img,
+      //   views: props.keepProp.views,
+      //   shares: props.keepProp.shares,
+      //   keeps: props.keepProp.keeps
+      // }
     })
-    // NOTE Doing this goes into endless loop
-    // onMounted(async() => {
-    //   await keepsService.getById(props.keepProp.id)
-    // })
     return {
       state,
       route,
+      async getVaultsByProfileId() {
+        try {
+          await profilesService.getVaultsByProfileId(props.keepProp.creatorId)
+        } catch (error) {
+          logger.error(error)
+        }
+      },
+      // async addKeepToVault() {
+      //   try {
+      //     AppState.vaults.push(state.newKeepInVault)
+      //   } catch (error) {
+      //     logger.error(error)
+      //   }
+      // },
       async remove() {
         try {
           if (await Notification.confirmAction('Are you sure you want to delete this keep?', 'You won\'t be able to revert this.', '', 'Yes, Delete')) {

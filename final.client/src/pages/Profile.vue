@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid profile-page">
+  <div class="profile-page">
     <h1>You Have Reached the Profile Page</h1>
     <div class="row">
       <div class="col-md-5">
@@ -70,30 +70,30 @@
           <div v-if="state.account.id === state.profile.id" class="col-md-10 d-flex align-items-center">
             <form class="form-inline" @submit.prevent="createKeep">
               <div class="form-group mx-sm-3 mb-2">
-                <label for="vaultNameInput" class="sr-only"></label>
+                <label for="keepNameInput" class="sr-only"></label>
                 <input type="text"
                        class="form-control"
-                       id="vault-name-input"
+                       id="keep-name-input"
                        placeholder="Keep Name..."
                        v-model="state.newKeep.name"
                        required
                 >
               </div>
               <div class="form-group mx-sm-3 mb-2">
-                <label for="vaultNameInput" class="sr-only"></label>
+                <label for="keepImgInput" class="sr-only"></label>
                 <input type="text"
                        class="form-control"
-                       id="vault-name-input"
+                       id="keep-img-input"
                        placeholder="Keep Img Url..."
                        v-model="state.newKeep.img"
                        required
                 >
               </div>
               <div class="form-group mx-sm-3 mb-2">
-                <label for="vaultNameInput" class="sr-only"></label>
+                <label for="keepDescriptionInput" class="sr-only"></label>
                 <input type="text"
                        class="form-control"
-                       id="vault-name-input"
+                       id="keep-description-input"
                        placeholder="Keep Description..."
                        v-model="state.newKeep.description"
                        required
@@ -105,7 +105,7 @@
             </form>
           </div>
         </div>
-        <div class="card-column masonry">
+        <div class="card-columns masonry">
           <KeepComponent v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" />
         </div>
         <KeepModal v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" />
@@ -174,39 +174,54 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fa-plus{
-  size: 200%;
+
+.card-columns{
+  display: inline-block;
+  width: 50px;
 }
 
-.masonry { /* Masonry container */
-    -webkit-column-count: 4;
-  -moz-column-count:4;
-  column-count: 4;
-  -webkit-column-gap: 1em;
-  -moz-column-gap: 1em;
-  column-gap: 1em;
-   margin: 1.5em;
-    padding: 0;
-    -moz-column-gap: 1.5em;
-    -webkit-column-gap: 1.5em;
-    column-gap: 1.5em;
-    font-size: .85em;
-}
-.item {
-    display: inline-block;
-    background: #fff;
-    margin: 0 0 1.5em;
-    width: 100%;
-  -webkit-transition:1s ease all;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-shadow: 2px 2px 4px 0 #ccc;
-}
-.item img{max-width:100%;}
+// .card-columns {
+//   @include media-breakpoint-only(lg) {
+//     column-count: 4;
+//   }
+//   @include media-breakpoint-only(xl) {
+//     column-count: 5;
+//   }
+// }
+
+// .fa-plus{
+//   size: 200%;
+// }
+
+// .card-columns { /* Masonry container */
+//     -webkit-column-count: 4;
+//   -moz-column-count:4;
+//   column-count: 4;
+//   -webkit-column-gap: 1em;
+//   -moz-column-gap: 1em;
+//   column-gap: 1em;
+//    margin: 1.5em;
+//     padding: 0;
+//     -moz-column-gap: 1.5em;
+//     -webkit-column-gap: 1.5em;
+//     column-gap: 1.5em;
+//     font-size: .85em;
+// }
+// .item {
+//     display: inline-block;
+//     background: #fff;
+//     margin: 0 0 1.5em;
+//     width: 100%;
+//   -webkit-transition:1s ease all;
+//     box-sizing: border-box;
+//     -moz-box-sizing: border-box;
+//     -webkit-box-sizing: border-box;
+//     box-shadow: 2px 2px 4px 0 #ccc;
+// }
+// .item img{max-width:100%;}
 
 @media only screen and (max-width: 320px) {
-    .masonry {
+    .card-columns {
         -moz-column-count: 1;
         -webkit-column-count: 1;
         column-count: 1;
@@ -214,21 +229,21 @@ export default {
 }
 
 @media only screen and (min-width: 321px) and (max-width: 768px){
-    .masonry {
+    .card-columns {
         -moz-column-count: 2;
         -webkit-column-count: 2;
         column-count: 2;
     }
 }
 @media only screen and (min-width: 769px) and (max-width: 1200px){
-    .masonry {
+    .card-columns {
         -moz-column-count: 3;
         -webkit-column-count: 3;
         column-count: 3;
     }
 }
 @media only screen and (min-width: 1201px) {
-    .masonry {
+    .card-columns {
         -moz-column-count: 4;
         -webkit-column-count: 4;
         column-count: 4;
