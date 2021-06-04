@@ -52,7 +52,8 @@
               <div class="col-md-6">
                 <div class="form-group col-auto my-1">
                   <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect"></label>
-                  <select @click="getVaultsByProfileId()" class="custom-select mr-sm-2" id="inlineFormCustomSelect" v-model="state.newKeepInVault.id">
+                  <select @click="getVaultsByProfileId()" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                    <!--TODO move this into the select above ^^^ after you figure out how to actually do this         v-model="state.newKeepInVault.id" -->
                     <option selected>
                       Insert Into Vault...
                     </option>

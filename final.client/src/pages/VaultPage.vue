@@ -15,7 +15,7 @@
         <h5>Keeps: {{ state.keeps.length }}</h5>
       </div>
     </div>
-    <div class="card-column masonry">
+    <div class="card-columns masonry">
       <KeepComponent v-for="Keeps in state.keeps" :key="Keeps.id" :keep-prop="Keeps" />
       {{ state.keeps }}
     </div>
@@ -75,14 +75,14 @@ export default {
 
 <style lang="scss" scoped>
 
-.masonry { /* Masonry container */
+.card-columns { /* Masonry container */
     -webkit-column-count: 4;
   -moz-column-count:4;
   column-count: 4;
   -webkit-column-gap: 1em;
   -moz-column-gap: 1em;
   column-gap: 1em;
-   margin: 1.5em;
+   margin: 2.5em;
     padding: 0;
     -moz-column-gap: 1.5em;
     -webkit-column-gap: 1.5em;
@@ -90,20 +90,22 @@ export default {
     font-size: .85em;
 }
 .item {
-    display: inline-block;
+    display:inline-flex;
     background: #fff;
     margin: 0 0 1.5em;
     width: 100%;
   -webkit-transition:1s ease all;
-    box-sizing: border-box;
+    box-sizing:border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-shadow: 2px 2px 4px 0 #ccc;
 }
-.item img{max-width:100%;}
+.item img{
+  max-width:50%;
+  }
 
 @media only screen and (max-width: 320px) {
-    .masonry {
+    .card-columns {
         -moz-column-count: 1;
         -webkit-column-count: 1;
         column-count: 1;
@@ -111,25 +113,38 @@ export default {
 }
 
 @media only screen and (min-width: 321px) and (max-width: 768px){
-    .masonry {
+    .card-columns {
         -moz-column-count: 2;
         -webkit-column-count: 2;
         column-count: 2;
     }
 }
 @media only screen and (min-width: 769px) and (max-width: 1200px){
-    .masonry {
+    .card-columns {
         -moz-column-count: 3;
         -webkit-column-count: 3;
         column-count: 3;
     }
 }
 @media only screen and (min-width: 1201px) {
-    .masonry {
+    .card-columns {
         -moz-column-count: 4;
         -webkit-column-count: 4;
         column-count: 4;
     }
+}
+
+.rounded-corners {
+  border-radius: 10px;
+}
+.gradient {
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.281) , transparent);
+  background-size: cover;
+  z-index: 1;
+}
+
+.circle-pic{
+  border-radius: 50%;
 }
 
 </style>

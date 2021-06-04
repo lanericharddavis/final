@@ -1,13 +1,12 @@
 <template>
   <div class="container-fluid profile-page">
-    <h1>You Have Reached the Profile Page</h1>
-    <div class="row">
+    <div class="row align-items-center p-3">
       <div class="col-md-5">
         <img v-if="state.profile.picture" :src="state.profile.picture" alt="profile picture">
       </div>
       <div class="col-md-7">
         <div class="row">
-          <h2>{{ state.profile.name }}</h2>
+          <h1>{{ state.profile.name }}</h1>
         </div>
         <div class="row">
           <h4>Vaults: {{ state.vaults.length }}</h4>
@@ -17,7 +16,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row p-3">
       <div class="col-md-12">
         <div class="row">
           <div class="col-md-1">
@@ -56,12 +55,12 @@
           </div>
         </div>
 
-        <div class="card-column masonry">
+        <div class="card-columns masonry">
           <VaultComponent v-for="Vaults in state.vaults" :key="Vaults.id" :vault-prop="Vaults" />
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row p-3">
       <div class="col-md-12">
         <div class="row">
           <div class="col-md-1">
@@ -175,50 +174,32 @@ export default {
 
 <style lang="scss" scoped>
 
-.card-columns{
-  display: inline-block;
-  width: 50px;
+.card-columns { /* Masonry container */
+    -webkit-column-count: 4;
+  -moz-column-count:4;
+  column-count: 4;
+  -webkit-column-gap: 1em;
+  -moz-column-gap: 1em;
+  column-gap: 1em;
+   margin: 1.5em;
+    padding: 0;
+    -moz-column-gap: 1.5em;
+    -webkit-column-gap: 1.5em;
+    column-gap: 1.5em;
+    font-size: .85em;
 }
-
-// .card-columns {
-//   @include media-breakpoint-only(lg) {
-//     column-count: 4;
-//   }
-//   @include media-breakpoint-only(xl) {
-//     column-count: 5;
-//   }
-// }
-
-// .fa-plus{
-//   size: 200%;
-// }
-
-// .card-columns { /* Masonry container */
-//     -webkit-column-count: 4;
-//   -moz-column-count:4;
-//   column-count: 4;
-//   -webkit-column-gap: 1em;
-//   -moz-column-gap: 1em;
-//   column-gap: 1em;
-//    margin: 1.5em;
-//     padding: 0;
-//     -moz-column-gap: 1.5em;
-//     -webkit-column-gap: 1.5em;
-//     column-gap: 1.5em;
-//     font-size: .85em;
-// }
-// .item {
-//     display: inline-block;
-//     background: #fff;
-//     margin: 0 0 1.5em;
-//     width: 100%;
-//   -webkit-transition:1s ease all;
-//     box-sizing: border-box;
-//     -moz-box-sizing: border-box;
-//     -webkit-box-sizing: border-box;
-//     box-shadow: 2px 2px 4px 0 #ccc;
-// }
-// .item img{max-width:100%;}
+.item {
+    display: inline-flex;
+    background: #fff;
+    margin: 0 0 1.5em;
+    width: 100%;
+  -webkit-transition:1s ease all;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-shadow: 2px 2px 4px 0 #ccc;
+}
+.item img{max-width:100%;}
 
 @media only screen and (max-width: 320px) {
     .card-columns {

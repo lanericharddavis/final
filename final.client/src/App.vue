@@ -7,7 +7,7 @@
     <keep-modal />
   </main>
   <footer>
-    <div class="bg-dark text-light text-center p-4">
+    <div class="bg-color text-light text-center p-4">
       Made by Lane Davis | June2021
     </div>
   </footer>
@@ -31,4 +31,7 @@ export default {
 <style lang="scss">
 @import "./assets/scss/main.scss";
 
+.bg-color{
+  background-color: #331f08;
+}
 </style>
