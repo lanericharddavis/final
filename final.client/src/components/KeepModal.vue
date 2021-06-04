@@ -57,7 +57,9 @@
                     <option selected>
                       Insert Into Vault...
                     </option>
-                    <VaultSelectionComponent v-for="Vaults in state.vaults" :key="Vaults.id" :vault-prop="Vaults" />
+                    <option v-for="Vaults in state.vaults" :key="Vaults.id">
+                      {{ Vaults.name }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -91,6 +93,7 @@ import { logger } from '../utils/Logger'
 import Notification from '../utils/Notification'
 import { keepsService } from '../services/KeepsService'
 import { profilesService } from '../services/ProfilesService'
+// import { vaultKeepsService } from '../services/vaultKeepsService'
 import { useRouter } from 'vue-router'
 // import $ from 'jquery'
 
@@ -130,7 +133,8 @@ export default {
       },
       // async addKeepToVault() {
       //   try {
-      //     AppState.vaults.push(state.newKeepInVault)
+      //     Vaults.id
+      //     await vaultKeepsService.newVaultKeep(props.keepProp.id)
       //   } catch (error) {
       //     logger.error(error)
       //   }

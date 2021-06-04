@@ -49,7 +49,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <button v-if="state.account.id === keepProp.creatorId" class="btn btn-info" @click="removeFromVault">
+              <button v-if="state.account.id === keepProp.creatorId" class="btn btn-info" @click="removeFromVault()" data-dismiss="modal">
                 Remove From Vault
               </button>
             </div>
@@ -76,6 +76,7 @@ import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
 import Notification from '../utils/Notification'
 import { keepsService } from '../services/KeepsService'
+import { vaultKeepsService } from '../services/VaultKeepsService'
 import { profilesService } from '../services/ProfilesService'
 import { useRouter } from 'vue-router'
 // import $ from 'jquery'
@@ -114,13 +115,15 @@ export default {
           logger.error(error)
         }
       },
-      // async removeFromVault(){
-      //   try {
-
-      //   } catch (error) {
-      //     logger.error(error)
-      //   }
-      // }
+      async removeFromVault() {
+        try {
+          if (await Notification.confirmAction('Are you sure you want to remove the keep from this vault?', 'Confirm', '', 'Yes, Remove')) {
+            await vaultKeepsService.removeFromVault(props.keepProp.vaultKeepId)
+          }
+        } catch (error) {
+          logger.error(error)
+        }
+      },
       async remove() {
         try {
           if (await Notification.confirmAction('Are you sure you want to delete this keep?', 'You won\'t be able to revert this.', '', 'Yes, Delete')) {
